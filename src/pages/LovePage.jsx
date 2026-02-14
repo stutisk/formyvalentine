@@ -1,6 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 
+const CUTE_CAT_GIF =
+  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTE1Yjd3MHBya2VrdnltYWU1MnB3NHpkN3NudHpxbzcycTlvbWpnaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OvpA7YvA9INE7bgGOy/giphy.gif";
+
 function extractYouTubeID(url) {
   const regex =
     /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -87,10 +90,20 @@ export default function LovePage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Load YouTube IFrame API when we have a YouTube video (playback starts on user click)
+  
+  useEffect(() => {
+    const img = new Image();
+    img.src = CUTE_CAT_GIF;
+  }, []);
+
+  
   useEffect(() => {
     if (!videoId) return;
-    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+    if (
+      !document.querySelector(
+        'script[src="https://www.youtube.com/iframe_api"]'
+      )
+    ) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
       const firstScript = document.getElementsByTagName("script")[0];
@@ -193,9 +206,10 @@ export default function LovePage() {
       {showGif ? (
         <div className="relative min-h-screen flex items-center justify-center bg-pink-200 overflow-hidden">
           <img
-            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTE1Yjd3MHBya2VrdnltYWU1MnB3NHpkN3NudHpxbzcycTlvbWpnaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OvpA7YvA9INE7bgGOy/giphy.gif"
+            src={CUTE_CAT_GIF}
             alt="cute cat gif"
-            className="absolute top-0 left50  h-full z-0 "
+            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            fetchPriority="high"
           />
 
           {confetti}
@@ -223,13 +237,16 @@ export default function LovePage() {
             </p>
 
             {song && !musicStarted && (
-              <button
-                type="button"
-                onClick={startMusic}
-                className="mb-4 text-sm text-pink-600 hover:text-pink-700 underline"
-              >
-                Play music
-              </button>
+              <div className="w-full flex justify-center mb-4">
+                <button
+                  type="button"
+                  onClick={startMusic}
+                  className="px-6 py-3 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 text-white font-semibold rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-bounce-slow flex items-center justify-center gap-1"
+                >
+                  <span>🎵 Play the music</span>
+                  <span className="text-yellow-200 animate-pulse">✨</span>
+                </button>
+              </div>
             )}
 
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
