@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -8,7 +8,7 @@ export default function Home() {
   const [generatedLink, setGeneratedLink] = useState("");
   const [copied, setCopied] = useState(false); 
 
-  const navigate = useNavigate();
+
 
   const handleGenerate = () => {
     const baseUrl = `${window.location.origin}/love`;
@@ -51,7 +51,7 @@ export default function Home() {
 
         <input
           type="text"
-          placeholder="Song link (YouTube/Spotify)"
+          placeholder="Song link (YouTube)"
           className="w-full border p-3 rounded-lg mb-6"
           onChange={(e) => setSong(e.target.value)}
         />
