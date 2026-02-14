@@ -1,6 +1,12 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
-    ]
-  }
-  
+  "redirects": [
+    {
+      "source": "/valentine",
+      "destination": "/love?name=ff&note=fff&song=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D6VKrB1PYsS8%26list%3DRD6VKrB1PYsS8%26start_radio%3D1",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

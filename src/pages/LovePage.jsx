@@ -243,7 +243,7 @@ export default function LovePage() {
                   onClick={startMusic}
                   className="px-6 py-3 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 text-white font-semibold rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-bounce-slow flex items-center justify-center gap-1"
                 >
-                  <span>🎵 Play the music</span>
+                     <span>🎵 Play the music dedicated to you</span>
                   <span className="text-yellow-200 animate-pulse">✨</span>
                 </button>
               </div>
