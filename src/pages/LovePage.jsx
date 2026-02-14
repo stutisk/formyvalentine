@@ -241,7 +241,7 @@ export default function LovePage() {
                 <button
                   type="button"
                   onClick={startMusic}
-                  className="px-6 py-3 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 text-white font-semibold rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-bounce-slow flex items-center justify-center gap-1"
+                  className=" cursor-pointer px-6 py-3 bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 text-white font-semibold rounded-full shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-bounce-slow flex items-center justify-center gap-1"
                 >
                      <span>🎵 Play the music dedicated to you</span>
                   <span className="text-yellow-200 animate-pulse">✨</span>
@@ -252,13 +252,13 @@ export default function LovePage() {
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
               <button
                 onClick={handleYes}
-                className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
+                className=" cursor-pointer bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
               >
                 Yes ❤️
               </button>
               <button
                 onClick={handleYes}
-                className="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
+                className=" cursor-pointer bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
               >
                 Definitely Yes 💖
               </button>

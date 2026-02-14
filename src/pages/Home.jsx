@@ -58,7 +58,7 @@ export default function Home() {
 
         <button
           onClick={handleGenerate}
-          className="w-full bg-pink-500 text-white py-3 rounded-lg hover:bg-pink-600 transition mb-4"
+          className=" cursor-pointer w-full bg-pink-500 text-white py-3 rounded-lg hover:bg-pink-600 transition mb-4"
         >
           Generate Love Link ❤️
         </button>
@@ -73,7 +73,7 @@ export default function Home() {
             />
             <button
               onClick={handleCopy}
-              className={`bg-pink-400 text-white py-2 px-4 rounded-lg transition ${
+              className={` cursor-pointer bg-pink-400 text-white py-2 px-4 rounded-lg transition ${
                 copied ? "bg-pink-600" : "hover:bg-pink-500"
               }`}
             >
