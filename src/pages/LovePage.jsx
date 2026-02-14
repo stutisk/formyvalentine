@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function extractYouTubeID(url) {
   const regex =
@@ -70,16 +70,64 @@ export default function LovePage() {
   const params = new URLSearchParams(location.search);
   const [showGif, setShowGif] = useState(false);
   const [mousePos, setMousePos] = useState({ x: null, y: null });
+  const [musicStarted, setMusicStarted] = useState(false);
   const name = params.get("name");
   const note = params.get("note");
   const song = params.get("song");
   const videoId = extractYouTubeID(song);
+  const audioRef = useRef(null);
+  const youtubePlayerRef = useRef(null);
+  const youtubeContainerRef = useRef(null);
+  const musicStartedRef = useRef(false);
+  musicStartedRef.current = musicStarted;
 
   useEffect(() => {
     const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  // Load YouTube IFrame API when we have a YouTube video (playback starts on user click)
+  useEffect(() => {
+    if (!videoId) return;
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScript = document.getElementsByTagName("script")[0];
+      firstScript.parentNode.insertBefore(tag, firstScript);
+    }
+    const id = videoId;
+    const tryPlay = (player) => {
+      if (musicStartedRef.current && player?.playVideo) player.playVideo();
+    };
+    window.onYouTubeIframeAPIReady = function createPlayer() {
+      const el = document.getElementById("youtube-player");
+      if (el && id && !youtubePlayerRef.current) {
+        youtubePlayerRef.current = new window.YT.Player("youtube-player", {
+          videoId: id,
+          playerVars: { autoplay: 0, loop: 1, playlist: id },
+          events: {
+            onReady: (e) => tryPlay(e.target),
+          },
+        });
+      }
+    };
+    if (window.YT?.Player) {
+      const el = document.getElementById("youtube-player");
+      if (el && !youtubePlayerRef.current) {
+        youtubePlayerRef.current = new window.YT.Player("youtube-player", {
+          videoId,
+          playerVars: { autoplay: 0, loop: 1, playlist: videoId },
+          events: {
+            onReady: (e) => tryPlay(e.target),
+          },
+        });
+      }
+    }
+    return () => {
+      delete window.onYouTubeIframeAPIReady;
+    };
+  }, [videoId]);
 
   const hearts = Array.from({ length: 15 }, (_, i) => (
     <Heart
@@ -112,21 +160,33 @@ export default function LovePage() {
     />
   ));
 
-  const handleYes = () => setShowGif(true);
+  const startMusic = () => {
+    if (musicStarted) return;
+    setMusicStarted(true);
+    if (song && !videoId && audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
+    if (videoId && youtubePlayerRef.current?.playVideo) {
+      youtubePlayerRef.current.playVideo();
+    }
+  };
+
+  const handleYes = () => {
+    startMusic();
+    setShowGif(true);
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       {song && !videoId && (
-        <audio src={song} autoPlay loop className="hidden" />
+        <audio ref={audioRef} src={song} loop className="hidden" />
       )}
       {song && videoId && (
-        <iframe
-          width="0"
-          height="0"
-          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`}
-          title="Love Song"
-          allow="autoplay"
-          className="hidden"
+        <div
+          ref={youtubeContainerRef}
+          id="youtube-player"
+          className="hidden w-0 h-0"
+          aria-hidden="true"
         />
       )}
 
@@ -161,6 +221,16 @@ export default function LovePage() {
             <p className="text-sm md:text-lg text-gray-700 mb-6 relative before:content-['❝'] before:text-pink-300 before:text-2xl before:absolute before:-left-4 before:-top-1 after:content-['❞'] after:text-pink-300 after:text-2xl after:absolute after:-right-4 after:-bottom-1">
               {note}
             </p>
+
+            {song && !musicStarted && (
+              <button
+                type="button"
+                onClick={startMusic}
+                className="mb-4 text-sm text-pink-600 hover:text-pink-700 underline"
+              >
+                Play music
+              </button>
+            )}
 
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
               <button
