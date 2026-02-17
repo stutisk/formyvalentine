@@ -222,9 +222,7 @@ export default function LovePage() {
           <MouseHeart x={mousePos.x} y={mousePos.y} />
 
           <div className="bg-white p-6 md:p-12 rounded-[30px] shadow-[0_15px_40px_rgba(255,77,109,0.3)] text-center w-full max-w-md z-10 relative animate-fade-in">
-            <h1 className="text-2xl md:text-4xl font-extrabold text-pink-600 mb-4 animate-pulse scale-up">
-              💖 Will you be my Valentine? 💖
-            </h1>
+
 
             {name && (
               <h2 className="text-lg md:text-2xl font-semibold text-pink-500 mb-4 flex items-center justify-center gap-2 animate-bounce-slow">
@@ -250,17 +248,17 @@ export default function LovePage() {
             )}
 
             <div className="mt-4 md:mt-6 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-              <button
+              {/* <button
                 onClick={handleYes}
                 className=" cursor-pointer bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
               >
                 Yes ❤️
-              </button>
+              </button> */}
               <button
                 onClick={handleYes}
                 className=" cursor-pointer bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600 transition w-full sm:w-auto"
               >
-                Definitely Yes 💖
+                I love You Too  💖
               </button>
             </div>
           </div>
